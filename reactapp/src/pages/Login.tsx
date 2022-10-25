@@ -3,6 +3,7 @@ import { Button, Container, Form } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
 import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie';
+import { ApiConstants } from '../api/api-constants'
 
 const Login = () => {
 
@@ -52,6 +53,33 @@ const Login = () => {
     }
   }
 
+  const doLogin = async (username : String, password : String) => {
+
+    console.log("dap");
+    
+    try {
+      const loginData = {
+        username : username,
+        password : password
+      }
+
+      console.log(loginData);
+
+      const loginResult = await fetch(ApiConstants.loginUrl, {
+        method : ApiConstants.httpPost,
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(loginData)
+      });
+
+      console.log(loginResult.json());
+
+    } catch (loginError) {
+      console.error ("[ERROR]: Error: " + loginError);  
+    }
+  }
+
   return (
       <Container className='m-5 d-flex flex-column align-items-center'>
         <Form noValidate validated={validated} onSubmit={handleSubmit} className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center' >
@@ -68,6 +96,7 @@ const Login = () => {
             <Form.Control required type="password" placeholder="Password" />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={() => doLogin("test","test1234!")}>
+          <Button variant="primary" type="submit" onClick={() => doLogin("a","b")}>
             Login
           </Button>
           <Form.Text className="text-muted">
