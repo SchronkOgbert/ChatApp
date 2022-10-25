@@ -34,6 +34,20 @@ const Login = () => {
   };
 
 
+  const [validated, setValidated] = useState(false);
+  const [user, setUser] = useState("");
+
+  const handleSubmit = (event:any) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
+
   const doLogin = async (username : String, password : String) => {
 
     console.log("dap");
