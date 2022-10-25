@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom'
 const Login = () => {
 
   return (
-      <Container className='mw-10'>
-        <Form className='m-5 d-flex flex-column align-items-center bg-white shadow p-3 rounded-3 border' >
-          Login
+      <Container className='m-5 d-flex flex-column align-items-center'>
+        <Form className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center' >
+            <Container className='m-3 w-25 d-flex flex-column align-items-center fw-bold text-primary fs-4'>
+                Login
+            </Container>
           <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control type="username" placeholder="Enter username" />
