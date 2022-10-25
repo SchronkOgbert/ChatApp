@@ -3,23 +3,8 @@ import { Button, Container, Form } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
 import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie';
-import { ApiConstants } from '../api/api-constants'
 
 const Login = () => {
-
-  const [validated, setValidated] = useState(false);
-  const [user, setUser] = useState("");
-
-  const handleSubmit = (event:any) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
-
 
 <<<<<<< Updated upstream
   const [validated, setValidated] = useState(false);
@@ -83,7 +68,6 @@ const Login = () => {
             <Form.Label>Password</Form.Label>
             <Form.Control required type="password" placeholder="Password" />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={() => doLogin("test","test1234!")}>
           <Button variant="primary" type="submit" onClick={() => doLogin("a","b")}>
             Login
           </Button>
