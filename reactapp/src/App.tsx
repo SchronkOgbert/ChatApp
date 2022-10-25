@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap"
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
-import Register from './pages/Register';
+import Register from './pages/Register'; 
 
 
 function App() {
@@ -13,11 +13,11 @@ function App() {
     <>
     <Navbar/>
       <Container className='mw-25 p-5'>
-      <Routes>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/" element={<Home />}/>
-        <Route path="/register" element={<Register />}/>
-      </Routes>
+          <Routes>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/" element={<Home />}/>
+            <Route path="/register" element={<Register />}/>
+          </Routes>
       </Container>
     </>
     
