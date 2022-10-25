@@ -6,6 +6,7 @@ const Register = () => {
   return (
     <Container className='mw-10'>
         <Form className='m-5 d-flex flex-column align-items-center bg-white shadow p-3 rounded-3 border' >
+            Register
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" />
@@ -23,6 +24,9 @@ const Register = () => {
             <Button variant="primary" type="submit">
                 Register
             </Button>
+            <Form.Text className="text-muted">
+                Already have an account?<Link to="/login">Login here!</Link>
+            </Form.Text>
         </Form>
     </Container>
   )
