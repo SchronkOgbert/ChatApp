@@ -20,6 +20,7 @@ const Login = () => {
   };
 
 
+<<<<<<< Updated upstream
   const [validated, setValidated] = useState(false);
   const [user, setUser] = useState("");
 
@@ -80,6 +81,8 @@ const Login = () => {
     }
   }
 
+=======
+>>>>>>> Stashed changes
   return (
       <Container className='m-5 d-flex flex-column align-items-center'>
         <Form noValidate validated={validated} onSubmit={handleSubmit} className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center' >
