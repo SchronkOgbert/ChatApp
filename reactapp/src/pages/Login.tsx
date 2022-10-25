@@ -1,8 +1,36 @@
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
+import { ApiConstants } from '../api/api-constants'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
+
+  const doLogin = async (username : String, password : String) => {
+
+    console.log("dap");
+    
+    try {
+      const loginData = {
+        username : username,
+        password : password
+      }
+
+      console.log(loginData);
+
+      const loginResult = await fetch(ApiConstants.loginUrl, {
+        method : ApiConstants.httpPost,
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(loginData)
+      });
+
+      console.log(loginResult.json());
+
+    } catch (loginError) {
+      console.error ("[ERROR]: Error: " + loginError);  
+    }
+  }
 
   return (
       <Container className='m-5 d-flex flex-column align-items-center'>
@@ -19,7 +47,7 @@ const Login = () => {
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={() => doLogin("a","b")}>
             Login
           </Button>
           <Form.Text className="text-muted">
