@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
 import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie';
 
 const Login = () => {
 
@@ -15,6 +16,7 @@ const Login = () => {
         password : password
       }
 
+
       console.log(loginData);
 
       const loginResult = await fetch(ApiConstants.loginUrl, {
@@ -25,7 +27,11 @@ const Login = () => {
         body : JSON.stringify(loginData)
       });
 
+      const cookies = new Cookies();
+      cookies.set('res',loginData,{ path: '/' });
+      console.log(cookies.get('res')); 
       console.log(loginResult.json());
+     
 
     } catch (loginError) {
       console.error ("[ERROR]: Error: " + loginError);  
@@ -47,7 +53,7 @@ const Login = () => {
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={() => doLogin("a","b")}>
+          <Button variant="primary" type="submit" onClick={() => doLogin("test","test1234!")}>
             Login
           </Button>
           <Form.Text className="text-muted">
