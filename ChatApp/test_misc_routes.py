@@ -46,6 +46,30 @@ class UserTests(unittest.TestCase):
                                 body=params)
         self.assertEqual(json.loads(response.data.decode())['success'], False)
 
+    def test_register_already_exists(self):
+        params = json.dumps({
+            'username': 'test',
+            'email':'test@hmail.com',
+            'password': 'test1234!'
+        })
+        response = http.request('POST', '127.0.0.1:8000/register/',
+                                headers={'Content-Type': 'application/json'},
+                                body=params)
+        self.assertEqual(json.loads(response.data.decode())['success'], False)
+
+#    def test_register_new_user(self):
+#        params = json.dumps({
+#            'username': 'cartof',
+#            'email':'cartof@gmail.com',
+#            'password': 'cartof!'
+#       })
+#       response = http.request('POST', '127.0.0.1:8000/register/',
+#                                headers={'Content-Type': 'application/json'},
+#                                body=params)
+#       self.assertEqual(json.loads(response.data.decode())['success'], True)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
