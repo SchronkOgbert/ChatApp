@@ -3,8 +3,7 @@ import {Navigate} from 'react-router-dom'
 
 const Home = () => {
   const [auth, setAuth] = useState(false);
-  
-  if (auth === false) {
+  if (!auth) {
     return <Navigate to="/login"/>
   }
   return (
