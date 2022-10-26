@@ -3,6 +3,7 @@ import { Button, Container, Form } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
 import { Link, Navigate } from 'react-router-dom'
 import Cookies from 'universal-cookie';
+import axios from '../api/axios';
 
 const Login = () => {
 
@@ -19,7 +20,7 @@ const Login = () => {
     <Navigate to = "/home"></Navigate>
     console.log(user, pwd, validated)
 
-    setValidated(true);
+    //setValidated(true);
   };
 
   function onClickEvent() {
@@ -28,6 +29,7 @@ const Login = () => {
 
 
   const doLogin = async (username : String, password : String) => {
+
     try {
       const loginData = {
         username : username,
@@ -35,19 +37,44 @@ const Login = () => {
       }
       console.log(loginData);
 
-      const loginResult = await fetch(ApiConstants.loginUrl, {
-        method : ApiConstants.httpPost,
-        headers : {
-          'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(loginData)
-      });
+      // const loginResult = await fetch(ApiConstants.loginUrl, {
+      //   method : ApiConstants.httpPost,
+      //   headers : {
+      //     'Content-Type' : 'application/json',
+      //   },
+      //   mode : 'cors',
+      //   body : JSON.stringify(loginData)
+      // });
+
+      // axios(ApiConstants.loginUrl ,{
+      //   method : ApiConstants.httpPost,
+      //   data : loginData,
+      //   headers: {
+      //     'Access-Control-Allow-Origin': 'http://localhost/login/',
+      //     'Acces-Control-Allow-Credentials' : true,
+			//     'Content-Type': 'application/json'
+      //   },
+      // }).then((response) =>{
+      //   console.log(response);
+      // }).catch((e) => {
+      //   console.log(e);
+      // });
+
+      axios.post(ApiConstants.loginUrl,loginData)
+        .then(function(response){
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
+
+      //console.log(loginResult);
 
       const cookies = new Cookies();
-      cookies.set('res',loginData,{ path: '/' });
-      console.log(cookies.get('res')); 
-      console.log(loginResult.json());
-      
+      //cookies.set('res',loginData,{ path: '/' });
+      //console.log(cookies.get('res')); 
+      //console.log(loginResult.json());
+     
 
     } catch (loginError) {
       console.error ("[ERROR]: Error: " + loginError);  
@@ -80,11 +107,7 @@ const Login = () => {
               value = {pwd} 
               onChange={(e) => setPwd(e.target.value)}/>
           </Form.Group>
-
-          <Button 
-            variant="primary" 
-            type="submit"
-            onClick={onClickEvent}>
+          <Button variant="primary" type="submit" onClick={() => doLogin("test","test1234!")}>
             Login
           </Button>
           <Form.Text className="text-muted">

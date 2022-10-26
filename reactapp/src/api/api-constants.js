@@ -1,5 +1,5 @@
 export const ApiConstants = {
-  loginUrl: "/login",
+  loginUrl: "/login/",
 
   httpGet: "GET",
   httpPost: "POST",
