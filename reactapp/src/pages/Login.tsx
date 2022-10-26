@@ -18,7 +18,7 @@ const Login = () => {
       event.preventDefault();
     }
     <Navigate to = "/home"></Navigate>
-    console.log(user, pwd, validated)
+    console.log(user, pwd, validated);
 
     //setValidated(true);
   };
@@ -46,27 +46,27 @@ const Login = () => {
       //   body : JSON.stringify(loginData)
       // });
 
-      // axios(ApiConstants.loginUrl ,{
-      //   method : ApiConstants.httpPost,
-      //   data : loginData,
-      //   headers: {
-      //     'Access-Control-Allow-Origin': 'http://localhost/login/',
-      //     'Acces-Control-Allow-Credentials' : true,
-			//     'Content-Type': 'application/json'
-      //   },
-      // }).then((response) =>{
-      //   console.log(response);
-      // }).catch((e) => {
-      //   console.log(e);
-      // });
+      axios.post(ApiConstants.loginUrl ,{
+        username: loginData.username,
+        password: loginData.password,
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost/login/',
+          'Acces-Control-Allow-Credentials' : true,
+			    'Content-Type': 'application/json'
+        },
+      }).then((response) =>{
+        console.log(response.data.token);
+      }).catch((e) => {
+        console.log(e);
+      });
 
-      axios.post(ApiConstants.loginUrl,loginData)
-        .then(function(response){
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
+      // axios.post(ApiConstants.loginUrl,loginData)
+      //   .then(response => {
+      //     console.log(response);
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   });
 
       //console.log(loginResult);
 
