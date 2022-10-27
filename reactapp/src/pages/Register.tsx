@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 
 const Register = () => {
+    
   return (
     <Container className='m-5 d-flex flex-column align-items-center'>
         <Form className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center'>

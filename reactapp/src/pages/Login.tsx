@@ -1,31 +1,74 @@
-import React, { useState } from 'react'
-import { Button, Container, Form } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import axios from '../api/axios';
 
-const Login = () => {
+//"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" Minim 8 caractere, minim o litera si un numar
 
-  const [validated, setValidated] = useState(false);
+const Login = () => {
+  const REGEXPWD = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
+  const REGEXUSER = /^.{5,}$/;
+  const [validatedUser, setValidatedUser] = useState(false);
+  const [validatedPwd, setValidatedPwd] = useState(false);
+  const [errMsgUser, setErrMsgUser] = useState("");
+  const [errMsgPwd, setErrMsgPwd] = useState("");
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event:any) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-      event.preventDefault();
+    useEffect(() => {
+      if(user.length !== 0){
+        checkUserValidation();
+      }
+      if(pwd.length !== 0){
+        checkPwdValidation();
+      }
+  },[user, pwd, validatedUser])
+
+  const checkUserValidation = () => {
+    if(user.length === 0){
+      setValidatedUser(false)
+      setErrMsgUser("Username can't be empty.")
+    } else if (!REGEXUSER.test(user)) {
+      setValidatedUser(false)
+      setErrMsgUser("Username needs more than 5 letters.")
     }
-    <Navigate to = "/home"></Navigate>
-    console.log(user, pwd, validated);
+    else {
+      setValidatedUser(true)
+    }
+  }
 
-    //setValidated(true);
-  };
-
-  function onClickEvent() {
+  const checkPwdValidation = () => {
+    if(pwd.length === 0){
+      setValidatedPwd(false)
+      setErrMsgPwd("Password can't be empty.")
+      console.log("pwd empty")
+    }
+    else if(!REGEXPWD.test(pwd)){
+      setValidatedPwd(false)
+      console.log("pwd not regex")
+      setErrMsgPwd("Password too weak.")
+    } 
+    else {
+      setValidatedPwd(true)
+    }
     
   }
+
+  const handleSubmit = (event:any) => {
+    if (validatedPwd && validatedUser) {
+      //doLogin(user,pwd);
+      navigate("/home");
+    } else {
+      event.preventDefault();
+
+      checkUserValidation();
+      checkPwdValidation();
+    }
+    
+  };
 
 
   const doLogin = async (username : String, password : String) => {
@@ -54,9 +97,9 @@ const Login = () => {
           'Acces-Control-Allow-Credentials' : true,
 			    'Content-Type': 'application/json'
         },
-      }).then((response) =>{
+      }).then((response:any) =>{
         console.log(response.data.token);
-      }).catch((e) => {
+      }).catch((e:any) => {
         console.log(e);
       });
 
@@ -82,35 +125,52 @@ const Login = () => {
   }
 
   return (
-      <Container className='m-5 d-flex flex-column align-items-center'>
-        <Form noValidate onSubmit={handleSubmit} validated={validated} className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center' >
+      <Container className='m-5 d-flex flex-column align-items-center '>
+        <Form noValidate onSubmit={handleSubmit} className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center' >
             <Container className='m-3 w-25 d-flex flex-column align-items-center fw-bold text-primary fs-4'>
                 Login
             </Container>
 
-          <Form.Group className="mb-3" controlId="formBasicUsername">
+          <Form.Group className="mb-5 d-flex flex-column align-items-start" controlId="formBasicUsername" >
             <Form.Label>Username</Form.Label>
-            <Form.Control 
-              required 
-              type="username" 
-              placeholder="Enter username" 
-              value = {user} 
-              onChange={(e) => setUser(e.target.value)}/>
+            <InputGroup hasValidation className='d-flex flex-column'>
+              <Form.Control 
+                required 
+                type="username" 
+                placeholder="Enter username" 
+                value = {user} 
+                onChange={(e) => setUser(e.target.value)}
+                className='w-100'
+                />
+              { !validatedUser ? (
+              <Form.Text className='mt-2 text-danger'>
+                {errMsgUser}
+              </Form.Text>) : ('')}
+              
+            </InputGroup>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3 d-flex flex-column " controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control 
-              required 
-              type="password" 
-              placeholder="Password"
-              value = {pwd} 
-              onChange={(e) => setPwd(e.target.value)}/>
+            <InputGroup hasValidation className='d-flex flex-column d-inline'>
+              <Form.Control 
+                required 
+                type="password" 
+                placeholder="Password"
+                value = {pwd} 
+                onChange={(e) => setPwd(e.target.value)}
+                className='w-100'
+                />
+              { !validatedPwd ? (
+              <Form.Text className='mt-2 text-danger'>
+                {errMsgPwd}
+              </Form.Text>) : ('')}
+            </InputGroup>
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={() => doLogin("test","test1234!")}>
+          <Button variant="primary" type="submit" className='mt-4'>
             Login
           </Button>
-          <Form.Text className="text-muted">
+          <Form.Text className="text-muted mt-3">
           No account? <Link to="/register">Register here!</Link>
           </Form.Text>
         </Form>
