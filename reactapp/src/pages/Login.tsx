@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
+import Cookies from "js-cookie";
 import axios from '../api/axios';
 
 //"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" Minim 8 caractere, minim o litera si un numar
@@ -10,6 +11,7 @@ import axios from '../api/axios';
 const Login = () => {
   const REGEXPWD = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
   const REGEXUSER = /^.{5,}$/;
+  const [loggedIn, setLoggedIn] = useState(false);
   const [validatedUser, setValidatedUser] = useState(false);
   const [validatedPwd, setValidatedPwd] = useState(false);
   const [errMsgUser, setErrMsgUser] = useState("");
@@ -19,22 +21,23 @@ const Login = () => {
   const navigate = useNavigate();
 
     useEffect(() => {
-      if(user.length !== 0){
-        checkUserValidation();
+      if (user.length !== 0){
+        checkUserValidation()
+      } else {
+          setErrMsgUser("")
       }
-      if(pwd.length !== 0){
-        checkPwdValidation();
+      if (pwd.length !== 0){
+        checkPwdValidation()
+      } else {
+          setErrMsgPwd("")
       }
-  },[user, pwd, validatedUser])
+      
+      },[user, pwd])
 
   const checkUserValidation = () => {
     if(user.length === 0){
       setValidatedUser(false)
-      setErrMsgUser("Username can't be empty.")
-    } else if (!REGEXUSER.test(user)) {
-      setValidatedUser(false)
-      setErrMsgUser("Username needs more than 5 letters.")
-    }
+      setErrMsgUser("Username can't be empty.")}
     else {
       setValidatedUser(true)
     }
@@ -43,36 +46,29 @@ const Login = () => {
   const checkPwdValidation = () => {
     if(pwd.length === 0){
       setValidatedPwd(false)
-      setErrMsgPwd("Password can't be empty.")
-      console.log("pwd empty")
-    }
-    else if(!REGEXPWD.test(pwd)){
-      setValidatedPwd(false)
-      console.log("pwd not regex")
-      setErrMsgPwd("Password too weak.")
-    } 
+      setErrMsgPwd("Username can't be empty.")}
     else {
       setValidatedPwd(true)
     }
-    
   }
 
   const handleSubmit = (event:any) => {
-    if (validatedPwd && validatedUser) {
-      //doLogin(user,pwd);
-      navigate("/home");
+    //doLogin(user,pwd);
+    if (validatedPwd && validatedUser){//add your own condition from the route) 
+      Cookies.set("user", "loggedIn")
+      setLoggedIn(true)
+      navigate("/");
     } else {
       event.preventDefault();
-
       checkUserValidation();
       checkPwdValidation();
+      setLoggedIn(false);
     }
     
   };
 
 
   const doLogin = async (username : String, password : String) => {
-
     try {
       const loginData = {
         username : username,
@@ -113,7 +109,7 @@ const Login = () => {
 
       //console.log(loginResult);
 
-      const cookies = new Cookies();
+      // const cookies = new Cookies();
       //cookies.set('res',loginData,{ path: '/' });
       //console.log(cookies.get('res')); 
       //console.log(loginResult.json());
