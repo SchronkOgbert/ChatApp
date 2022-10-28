@@ -46,17 +46,16 @@ const Login = () => {
   const checkPwdValidation = () => {
     if(pwd.length === 0){
       setValidatedPwd(false)
-      setErrMsgPwd("Username can't be empty.")}
+      setErrMsgPwd("Password can't be empty.")}
     else {
       setValidatedPwd(true)
     }
   }
 
   const handleSubmit = (event:any) => {
-    //doLogin(user,pwd);
     if (validatedPwd && validatedUser){//add your own condition from the route) 
-      Cookies.set("user", "loggedIn")
-      setLoggedIn(true)
+      doLogin(user,pwd);
+      setLoggedIn(true);
       navigate("/");
     } else {
       event.preventDefault();
@@ -76,45 +75,27 @@ const Login = () => {
       }
       console.log(loginData);
 
-      // const loginResult = await fetch(ApiConstants.loginUrl, {
-      //   method : ApiConstants.httpPost,
-      //   headers : {
-      //     'Content-Type' : 'application/json',
-      //   },
-      //   mode : 'cors',
-      //   body : JSON.stringify(loginData)
-      // });
-
       axios.post(ApiConstants.loginUrl ,{
         username: loginData.username,
         password: loginData.password,
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost/login/',
-          'Acces-Control-Allow-Credentials' : true,
 			    'Content-Type': 'application/json'
         },
       }).then((response:any) =>{
         console.log(response.data.token);
+        if (response.data.token !== null) {
+          Cookies.set("csrfToken", response.data.token);
+        }
+        if (response.data.success){
+          Cookies.set("user", user);
+        } else {
+          console.log("mias pula")
+        }
+       
       }).catch((e:any) => {
         console.log(e);
       });
-
-      // axios.post(ApiConstants.loginUrl,loginData)
-      //   .then(response => {
-      //     console.log(response);
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   });
-
-      //console.log(loginResult);
-
-      // const cookies = new Cookies();
-      //cookies.set('res',loginData,{ path: '/' });
-      //console.log(cookies.get('res')); 
-      //console.log(loginResult.json());
      
-
     } catch (loginError) {
       console.error ("[ERROR]: Error: " + loginError);  
     }
