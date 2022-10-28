@@ -2,6 +2,8 @@ import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react'
 import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from '../api/axios';
+import { ApiConstants } from '../api/api-constants';
 
 
 const Register = () => {
@@ -108,8 +110,28 @@ const Register = () => {
   const handleSubmit = (event:any) => {
     if (validatedPwd && validatedUser && validatedEmail) {
       setRegistered(true);
-      //DO SOMETHING AFTER REGISTER HERE
-      navigate("/login");
+      axios.post(ApiConstants.registerUrl ,{
+        username: user,
+        password: pwd,
+        email: email,
+        headers: {
+			    'Content-Type': 'application/json'
+        },
+      }).then((response:any) =>{
+        console.log(response.data.token);
+        if (response.data.token !== null) {
+          Cookies.set("csrfToken", response.data.token);
+        }
+        if (response.data.success){
+          Cookies.set("user", user);
+        } else {
+          console.log("mias pula")
+        }
+       
+      }).catch((e:any) => {
+        console.log(e);
+      });
+      navigate("/");
     } else {
       event.preventDefault();
       checkEmailValidation();
