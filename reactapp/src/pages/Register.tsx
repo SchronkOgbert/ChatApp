@@ -124,6 +124,7 @@ const Register = () => {
         }
         if (response.data.success){
           Cookies.set("user", user);
+          navigate("/login");
         } else {
           console.log("mias pula")
         }
@@ -131,7 +132,8 @@ const Register = () => {
       }).catch((e:any) => {
         console.log(e);
       });
-      navigate("/");
+     
+
     } else {
       event.preventDefault();
       checkEmailValidation();

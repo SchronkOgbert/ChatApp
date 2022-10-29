@@ -10,9 +10,11 @@ const Home = () => {
     readCookie();
   }, []);
 
+
+
   const readCookie = () => {
-    const user = Cookies.get("user");
-      if (user) {
+    const csrfToken = Cookies.get("csrfToken");
+      if (csrfToken) {
         setAuth(true);
       } else {
         setAuth(false);

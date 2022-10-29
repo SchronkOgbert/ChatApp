@@ -13,17 +13,18 @@ import Cookies from 'js-cookie';
   }, []);
 
   function logout() {
-    Cookies.remove("user")
-    setLoggedIn(false);
+    Cookies.remove("user");
+    Cookies.remove("csrfToken");
     window.location.reload();
+    setLoggedIn(false);
   }
 
-
-
   const readCookie = () => {
-    const user = Cookies.get("user");
-    if (user) {
+    const csrfToken = Cookies.get("csrfToken");
+    if (csrfToken) {
       setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
     }
     };
 
@@ -33,7 +34,7 @@ import Cookies from 'js-cookie';
        <NavbarBs sticky='top' className='bg-white shadow-sm'>
         <Container className='d-flex flex-column align-items-center justify-content-between'>
           <Nav className='me-auto fw-bold fs-4'>
-            <Nav.Link as={NavLink} to='/' className='text-primary'>Chat App</Nav.Link>
+            <Nav.Link as={NavLink} to='/login' className='text-primary'>Chat App</Nav.Link>
           </Nav>
         </Container>
       </NavbarBs>

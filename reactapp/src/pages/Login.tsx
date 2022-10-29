@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { ApiConstants } from '../api/api-constants'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-// import Cookies from 'universal-cookie';
 import Cookies from "js-cookie";
 import axios from '../api/axios';
 
-//"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" Minim 8 caractere, minim o litera si un numar
 
 const Login = () => {
-  const REGEXPWD = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
-  const REGEXUSER = /^.{5,}$/;
-  const [loggedIn, setLoggedIn] = useState(false);
   const [validatedUser, setValidatedUser] = useState(false);
   const [validatedPwd, setValidatedPwd] = useState(false);
   const [errMsgUser, setErrMsgUser] = useState("");
@@ -20,19 +15,24 @@ const Login = () => {
   const [pwd, setPwd] = useState("");
   const navigate = useNavigate();
 
-    useEffect(() => {
-      if (user.length !== 0){
-        checkUserValidation()
-      } else {
-          setErrMsgUser("")
-      }
-      if (pwd.length !== 0){
-        checkPwdValidation()
-      } else {
-          setErrMsgPwd("")
-      }
-      
-      },[user, pwd])
+  let loggedIn = false;
+  useEffect(() => {
+    if (user.length !== 0){
+      checkUserValidation()
+    } else {
+        setErrMsgUser("")
+    }
+    if (pwd.length !== 0){
+      checkPwdValidation()
+    } else {
+        setErrMsgPwd("")
+    }
+
+    if (loggedIn){
+      navigate('/')
+    }
+    
+    },[user, pwd, loggedIn])
 
   const checkUserValidation = () => {
     if(user.length === 0){
@@ -53,53 +53,43 @@ const Login = () => {
   }
 
   const handleSubmit = (event:any) => {
-    if (validatedPwd && validatedUser){//add your own condition from the route) 
-      doLogin(user,pwd);
-      setLoggedIn(true);
-      navigate("/");
-    } else {
-      event.preventDefault();
-      checkUserValidation();
-      checkPwdValidation();
-      setLoggedIn(false);
+    if (validatedPwd && validatedUser){
+      try {
+        axios.post(ApiConstants.loginUrl ,{
+          username: user,
+          password: pwd,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        }).then((response:any) =>{
+          console.log(response.data.token);
+          if (response.data.token !== null) {
+            navigate('/')
+            Cookies.set("csrfToken", response.data.token);
+            loggedIn = true;
+            window.location.reload();
+          }
+          if (response.data.success){
+            Cookies.set("user", user);
+          } else {
+            console.log("mias pula")
+          }
+        }).catch((e:any) => {
+          console.log(e);
+        });
+      } catch (loginError) {
+        console.error ("[ERROR]: Error: " + loginError);  
+      }
     }
-    
+    event.preventDefault();
+    checkUserValidation();
+    checkPwdValidation();
+    loggedIn = false;
   };
 
-
-  const doLogin = async (username : String, password : String) => {
-    try {
-      const loginData = {
-        username : username,
-        password : password
-      }
-      console.log(loginData);
-
-      axios.post(ApiConstants.loginUrl ,{
-        username: loginData.username,
-        password: loginData.password,
-        headers: {
-			    'Content-Type': 'application/json'
-        },
-      }).then((response:any) =>{
-        console.log(response.data.token);
-        if (response.data.token !== null) {
-          Cookies.set("csrfToken", response.data.token);
-        }
-        if (response.data.success){
-          Cookies.set("user", user);
-        } else {
-          console.log("mias pula")
-        }
-       
-      }).catch((e:any) => {
-        console.log(e);
-      });
-     
-    } catch (loginError) {
-      console.error ("[ERROR]: Error: " + loginError);  
-    }
-  }
+  // const doLogin = async () => {
+    
+  // }
 
   return (
       <Container className='m-5 d-flex flex-column align-items-center '>
@@ -122,8 +112,7 @@ const Login = () => {
               { !validatedUser ? (
               <Form.Text className='mt-2 text-danger'>
                 {errMsgUser}
-              </Form.Text>) : ('')}
-              
+              </Form.Text>) : ('')}        
             </InputGroup>
           </Form.Group>
 
@@ -154,8 +143,9 @@ const Login = () => {
       </Container>
     
     
-  )
-}
-
+    )
+  }
+  
 export default Login
+
 
