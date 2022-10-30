@@ -11,6 +11,7 @@ const Login = () => {
   const [validatedPwd, setValidatedPwd] = useState(false);
   const [errMsgUser, setErrMsgUser] = useState("");
   const [errMsgPwd, setErrMsgPwd] = useState("");
+  const [errMsgValid, setErrMsgValid] = useState("");
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Login = () => {
       checkPwdValidation()
     } else {
         setErrMsgPwd("")
+        setErrMsgValid("");
     }
 
     if (loggedIn){
@@ -62,7 +64,6 @@ const Login = () => {
             'Content-Type': 'application/json'
           },
         }).then((response:any) =>{
-          console.log(response.data.token);
           if (response.data.token !== null) {
             navigate('/')
             Cookies.set("csrfToken", response.data.token);
@@ -72,7 +73,7 @@ const Login = () => {
           if (response.data.success){
             Cookies.set("user", user);
           } else {
-            console.log("mias pula")
+            setErrMsgValid(response.data.message);
           }
         }).catch((e:any) => {
           console.log(e);
@@ -81,15 +82,12 @@ const Login = () => {
         console.error ("[ERROR]: Error: " + loginError);  
       }
     }
+    setErrMsgPwd("Password can't be empty.")
     event.preventDefault();
     checkUserValidation();
     checkPwdValidation();
     loggedIn = false;
   };
-
-  // const doLogin = async () => {
-    
-  // }
 
   return (
       <Container className='m-5 d-flex flex-column align-items-center '>
@@ -130,7 +128,9 @@ const Login = () => {
               { !validatedPwd ? (
               <Form.Text className='mt-2 text-danger'>
                 {errMsgPwd}
-              </Form.Text>) : ('')}
+              </Form.Text>) : (<Form.Text className='mt-2 text-danger'>
+                {errMsgValid}
+              </Form.Text>)} 
             </InputGroup>
           </Form.Group>
           <Button variant="primary" type="submit" className='mt-4'>

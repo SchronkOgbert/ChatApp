@@ -1,7 +1,6 @@
 import json
 
 
-
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.http import HttpResponse
@@ -42,25 +41,16 @@ def register(request):
     email = data['email']
     password = data['password']
     try:
-        User.objects.create_user(username=username, email=email, password=password)
+        User.objects.create_user(
+            username=username, email=email, password=password)
         response = {
             "success": True,
             "message": "Success",
-            "token": get_token(request)
         }
     except Exception as e:
         response = {
             "success": False,
             "message": "Success"
-                    }
+        }
     finally:
         return HttpResponse(json.dumps(response))
-
-
-
-
-
-
-
-
-
