@@ -10,7 +10,6 @@ const Register = () => {
   const REGEXEMAIL = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const REGEXPWD = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
   const REGEXUSER = /^.{5,}$/;
-  const [registered, setRegistered] = useState(false);
   const [validatedUser, setValidatedUser] = useState(false);
   const [validatedEmail, setValidatedEmail] = useState(false);
   const [validatedPwd, setValidatedPwd] = useState(false);
@@ -26,6 +25,8 @@ const Register = () => {
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const navigate = useNavigate();
+
+  let registered = false;
 
     useEffect(() => {
         if (email.length !== 0){
@@ -109,40 +110,39 @@ const Register = () => {
 
   const handleSubmit = (event:any) => {
     if (validatedPwd && validatedUser && validatedEmail) {
-      setRegistered(true);
-      axios.post(ApiConstants.registerUrl ,{
-        username: user,
-        password: pwd,
-        email: email,
-        headers: {
-			    'Content-Type': 'application/json'
-        },
-      }).then((response:any) =>{
-        console.log(response.data.token);
-        if (response.data.token !== null) {
-          Cookies.set("csrfToken", response.data.token);
-        }
-        if (response.data.success){
-          Cookies.set("user", user);
-          navigate("/login");
-        } else {
-          console.log("mias pula")
-        }
-       
-      }).catch((e:any) => {
-        console.log(e);
-      });
-     
-
-    } else {
+      try {
+        axios.post(ApiConstants.registerUrl ,{
+          username: user,
+          password: pwd,
+          email: email,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        }).then((response:any) =>{
+          console.log(response.data.token);
+          if (response.data.token !== null) {
+            navigate("/login");
+            registered = true;
+            window.location.reload();
+          }
+          if (response.data.success){
+            console.log("response.data.success!")
+          } else {
+            console.log("mias pula")
+          }
+        }).catch((e:any) => {
+          console.log(e);
+        });  
+      } catch (registerError) {
+        console.error("[ERROR]: Error: " + registerError)
+      }
+    }
       event.preventDefault();
       checkEmailValidation();
       checkUserValidation();
       checkPwdValidation();
       checkConfirmPwdValidation();
-      setRegistered(false);
-    }
-    
+      registered = false;
   };
 
   return (
