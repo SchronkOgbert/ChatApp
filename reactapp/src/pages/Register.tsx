@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/axios';
 import { ApiConstants } from '../api/api-constants';
 import { doRegister } from '../api/api-routes';
+import RegisterForm from '../components/RegisterForm';
 
 
 const Register = () => {
@@ -123,89 +124,9 @@ const Register = () => {
   };
 
   return (
-    <Container className='m-5 d-flex flex-column align-items-center'>
-        <Form noValidate onSubmit={handleSubmit} className='m-5 w-50 bg-white shadow p-3 rounded-3 border d-flex flex-column align-items-center' >
-            <Container className='m-3 w-25 d-flex flex-column align-items-center fw-bold text-primary fs-4'>
-                Register
-            </Container>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <InputGroup hasValidation className='d-flex flex-column d-inline'>
-                    <Form.Control 
-                    required
-                    type="email" 
-                    placeholder="Enter email" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)}
-                    className='w-100'
-                    />
-                    { !validatedEmail ? (
-                    <Form.Text className='mt-2 text-danger'>
-                        {errMsgEmail}
-                    </Form.Text>) : ('')}
-                </InputGroup>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicUsername">
-                <Form.Label>Username</Form.Label>
-                <InputGroup hasValidation className='d-flex flex-column'>
-                    <Form.Control 
-                        required 
-                        type="username" 
-                        placeholder="Enter username" 
-                        value = {user} 
-                        onChange={(e) => setUser(e.target.value)}
-                        className='w-100'
-                        />
-                    { !validatedUser ? (
-                    <Form.Text className='mt-2 text-danger'>
-                        {errMsgUser}
-                    </Form.Text>) : ('')}
-                </InputGroup>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <InputGroup hasValidation className='d-flex flex-column d-inline'>
-                    <Form.Control 
-                        required 
-                        type="password" 
-                        placeholder="Password"
-                        value = {pwd} 
-                        onChange={(e) => setPwd(e.target.value)}
-                        className='w-100'
-                        />
-                        { !validatedPwd ? (
-                    <Form.Text className='mt-2 text-danger'>
-                        {errMsgPwd}
-                    </Form.Text>) : ('')}
-                </InputGroup>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <InputGroup hasValidation className='d-flex flex-column d-inline'>
-                    <Form.Control 
-                        required 
-                        type="password" 
-                        placeholder="Confirm password"
-                        value = {confirmPwd} 
-                        onChange={(e) => setConfirmPwd(e.target.value)}
-                        className='w-100'
-                        />
-                        { !validatedConfirmPwd ? (
-                    <Form.Text className='mt-2 text-danger'>
-                        {errMsgConfirmPwd}
-                    </Form.Text>) : ('')}
-                </InputGroup>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Register
-            </Button>
-            <Form.Text className="text-muted">
-                Already have an account? <Link to="/login">Login here!</Link>
-            </Form.Text>
-        </Form>
-    </Container>
+    <>
+      <RegisterForm/>
+    </>
   )
 }
 
