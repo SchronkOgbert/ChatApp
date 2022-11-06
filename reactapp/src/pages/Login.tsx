@@ -4,6 +4,7 @@ import { ApiConstants } from '../api/api-constants'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Cookies from "js-cookie";
 import axios from '../api/axios';
+import { doLogin } from '../api/api-routes';
 
 
 const Login = () => {
@@ -56,31 +57,7 @@ const Login = () => {
 
   const handleSubmit = (event:any) => {
     if (validatedPwd && validatedUser){
-      try {
-        axios.post(ApiConstants.loginUrl ,{
-          username: user,
-          password: pwd,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        }).then((response:any) =>{
-          if (response.data.token !== null) {
-            navigate('/')
-            Cookies.set("csrfToken", response.data.token);
-            loggedIn = true;
-            window.location.reload();
-          }
-          if (response.data.success){
-            Cookies.set("user", user);
-          } else {
-            setErrMsgValid(response.data.message);
-          }
-        }).catch((e:any) => {
-          console.log(e);
-        });
-      } catch (loginError) {
-        console.error ("[ERROR]: Error: " + loginError);  
-      }
+      doLogin(user,pwd,navigate,loggedIn,setErrMsgValid);
     }
     setErrMsgPwd("Password can't be empty.")
     event.preventDefault();
