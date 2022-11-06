@@ -1,7 +1,6 @@
 import React from 'react';
-import { Routes, Route } from "react-router-dom"
-import { Container } from "react-bootstrap"
-
+import { Routes, Route } from "react-router-dom";
+import { Container } from "react-bootstrap";
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';

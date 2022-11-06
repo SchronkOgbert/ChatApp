@@ -39,7 +39,7 @@ import Cookies from 'js-cookie';
         </Container>
       </NavbarBs>
     ) : (
-      <NavbarBs sticky='top' className='bg-white shadow-sm'>
+      <NavbarBs sticky='top' className='bg-white shadow-md'>
         <Container className='container-fluid me-auto fw-bold fs-4'>
             <Nav.Link as={NavLink} to='/' className='text-primary'>Chat App</Nav.Link>
             <Button
