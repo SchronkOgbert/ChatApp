@@ -4,6 +4,7 @@ import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/axios';
 import { ApiConstants } from '../api/api-constants';
+import { doRegister } from '../api/api-routes';
 
 
 const Register = () => {
@@ -110,32 +111,8 @@ const Register = () => {
 
   const handleSubmit = (event:any) => {
     if (validatedPwd && validatedUser && validatedEmail) {
-      try {
-        axios.post(ApiConstants.registerUrl ,{
-          username: user,
-          password: pwd,
-          email: email,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        }).then((response:any) =>{
-          console.log(response.data.token);
-          if (response.data.token !== null) {
-            navigate("/login");
-            registered = true;
-            window.location.reload();
-          }
-          if (response.data.success){
-            console.log("response.data.success!")
-          } else {
-            console.log("mias pula")
-          }
-        }).catch((e:any) => {
-          console.log(e);
-        });  
-      } catch (registerError) {
-        console.error("[ERROR]: Error: " + registerError)
-      }
+      doRegister(user,pwd,email,navigate,registered);
+
     }
       event.preventDefault();
       checkEmailValidation();

@@ -1,6 +1,7 @@
 export const ApiConstants = {
   loginUrl: "/login/",
   registerUrl: "/register/",
+  chatUrl: "/chat/available/",
 
   httpGet: "GET",
   httpPost: "POST",
