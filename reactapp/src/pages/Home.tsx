@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react'
-import {Navigate, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Sidebar from '../components/Sidebar';
 import ChatView from '../components/ChatView';
 import { Container } from 'react-bootstrap';
@@ -28,8 +28,6 @@ const Home = () => {
       }
     };
 
-
-    
   return (
     <>
       {!auth ? "" : (

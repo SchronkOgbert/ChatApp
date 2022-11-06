@@ -1,4 +1,3 @@
-import React from 'react'
 import Chats from './Chats'
 import Search from './Search'
 import SideNav from './SideNav'

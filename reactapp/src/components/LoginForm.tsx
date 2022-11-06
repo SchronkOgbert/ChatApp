@@ -1,92 +1,66 @@
-import React,  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Container, Form, InputGroup } from 'react-bootstrap'
-import { ApiConstants } from '../api/api-constants'
 import { Link, useNavigate } from 'react-router-dom'
-import Cookies from "js-cookie";
-import axios from '../api/axios';
+import { doLogin } from '../api/api-routes';
 
 const LoginForm = () => {
-    const [validatedUser, setValidatedUser] = useState(false);
-    const [validatedPwd, setValidatedPwd] = useState(false);
-    const [errMsgUser, setErrMsgUser] = useState("");
-    const [errMsgPwd, setErrMsgPwd] = useState("");
-    const [errMsgValid, setErrMsgValid] = useState("");
-    const [user, setUser] = useState("");
-    const [pwd, setPwd] = useState("");
-    const navigate = useNavigate();
-  
-    let loggedIn = false;
-    useEffect(() => {
-      if (user.length !== 0){
-        checkUserValidation()
-      } else {
-          setErrMsgUser("")
-      }
-      if (pwd.length !== 0){
-        checkPwdValidation()
-      } else {
-          setErrMsgPwd("")
-          setErrMsgValid("");
-      }
-  
-      if (loggedIn){
-        navigate('/')
-      }
-      
-      },[user, pwd, loggedIn])
-  
-    const checkUserValidation = () => {
-      if(user.length === 0){
-        setValidatedUser(false)
-        setErrMsgUser("Username can't be empty.")}
-      else {
-        setValidatedUser(true)
-      }
+  const [validatedUser, setValidatedUser] = useState(false);
+  const [validatedPwd, setValidatedPwd] = useState(false);
+  const [errMsgUser, setErrMsgUser] = useState("");
+  const [errMsgPwd, setErrMsgPwd] = useState("");
+  const [errMsgValid, setErrMsgValid] = useState("");
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const navigate = useNavigate();
+
+  let loggedIn = false;
+  useEffect(() => {
+    if (user.length !== 0){
+      checkUserValidation()
+    } else {
+        setErrMsgUser("")
     }
-  
-    const checkPwdValidation = () => {
-      if(pwd.length === 0){
-        setValidatedPwd(false)
-        setErrMsgPwd("Password can't be empty.")}
-      else {
-        setValidatedPwd(true)
-      }
+    if (pwd.length !== 0){
+      checkPwdValidation()
+    } else {
+        setErrMsgPwd("")
+        setErrMsgValid("");
     }
-  
-    const handleSubmit = (event:any) => {
-      if (validatedPwd && validatedUser){
-        try {
-          axios.post(ApiConstants.loginUrl ,{
-            username: user,
-            password: pwd,
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          }).then((response:any) =>{
-            if (response.data.token !== null) {
-              navigate('/')
-              Cookies.set("csrfToken", response.data.token);
-              loggedIn = true;
-              window.location.reload();
-            }
-            if (response.data.success){
-              Cookies.set("user", user);
-            } else {
-              setErrMsgValid(response.data.message);
-            }
-          }).catch((e:any) => {
-            console.log(e);
-          });
-        } catch (loginError) {
-          console.error ("[ERROR]: Error: " + loginError);  
-        }
-      }
-      setErrMsgPwd("Password can't be empty.")
-      event.preventDefault();
-      checkUserValidation();
-      checkPwdValidation();
-      loggedIn = false;
-    };
+
+    if (loggedIn){
+      navigate('/')
+    }
+    
+    },[user, pwd, loggedIn])
+
+  const checkUserValidation = () => {
+    if(user.length === 0){
+      setValidatedUser(false)
+      setErrMsgUser("Username can't be empty.")}
+    else {
+      setValidatedUser(true)
+    }
+  }
+
+  const checkPwdValidation = () => {
+    if(pwd.length === 0){
+      setValidatedPwd(false)
+      setErrMsgPwd("Password can't be empty.")}
+    else {
+      setValidatedPwd(true)
+    }
+  }
+
+  const handleSubmit = (event:any) => {
+    if (validatedPwd && validatedUser){
+      doLogin(user,pwd,navigate,loggedIn,setErrMsgValid);
+    }
+    setErrMsgPwd("Password can't be empty.")
+    event.preventDefault();
+    checkUserValidation();
+    checkPwdValidation();
+    loggedIn = false;
+  };
   
     return (
         <Container className='m-5 d-flex flex-column align-items-center '>
