@@ -39,9 +39,8 @@ import Cookies from 'js-cookie';
         </Container>
       </NavbarBs>
     ) : (
-      <NavbarBs sticky='top' className='bg-white shadow-sm'>
-        <Container className='d-flex flex-column align-items-center justify-content-between'>
-          <Nav className='me-auto fw-bold fs-4'>
+      <NavbarBs sticky='top' className='bg-white shadow-md'>
+        <Container className='container-fluid me-auto fw-bold fs-4'>
             <Nav.Link as={NavLink} to='/' className='text-primary'>Chat App</Nav.Link>
             <Button
               variant="outline-primary"
@@ -49,7 +48,6 @@ import Cookies from 'js-cookie';
               onClick={() => logout()}
               >Log out
             </Button>
-          </Nav>
         </Container>
       </NavbarBs>
     )}

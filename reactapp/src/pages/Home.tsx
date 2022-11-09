@@ -1,6 +1,9 @@
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react'
-import {Navigate, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import Sidebar from '../components/Sidebar';
+import ChatView from '../components/ChatView';
+import { Container } from 'react-bootstrap';
 import { getChatView } from '../api/api-routes';
 
 const Home = () => {
@@ -25,10 +28,14 @@ const Home = () => {
       }
     };
 
-    
   return (
     <>
-      <div>Logged In</div>
+      {!auth ? "" : (
+        <Container className='d-flex rounded-sm' style={{height: 800}}>
+            <Sidebar/>
+            <ChatView/>
+        </Container>
+      )}
     </>
   )
 }
