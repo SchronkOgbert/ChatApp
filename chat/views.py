@@ -13,3 +13,7 @@ def available(request):
     results = Chat.objects.all().filter(id__in=Chat2Users.objects.values('chat_id').
                                         filter(user_id=User.objects.get(username=username).id))
     return HttpResponse(json.dumps(list(results), cls=JSONEncoder))
+
+
+def room(request):
+    return None
