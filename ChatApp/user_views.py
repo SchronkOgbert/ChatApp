@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.http import HttpResponse
 from django.middleware.csrf import get_token
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -53,3 +54,8 @@ def register(request):
         }
     finally:
         return HttpResponse(json.dumps(response))
+
+
+def index(request):
+    return render(request, 'chat/lobby.html')
+

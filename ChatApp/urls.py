@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', user_views.login),
     path('register/', user_views.register),
-    path('chat/', include('chat.urls'))
-
+    path('', user_views.index, name='lobby'),
+    path('chat/', include('chat.urls')),
 ]
