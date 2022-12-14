@@ -14,6 +14,7 @@ class ChatRoomConsumer(WebsocketConsumer):
         )
 
         self.accept()
+        self.send(text_data=json.dumps({'message': {'success': True}}))
 
     def disconnect(self, close_code):
         # Leave room group

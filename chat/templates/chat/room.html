@@ -21,8 +21,14 @@
             + '/'
         );
 
-        chatSocket.onmessage = function(e) {
+        chatSocket.onmessage = function(e)
+        {
             const data = JSON.parse(e.data);
+            if(typeof (data.message.success) == "boolean")
+            {
+                return;
+            }
+            {#console.log(data);#}
             document.querySelector('#chat-log').value += (data.message + '\n');
         };
 
