@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    readCookie();
+    // readCookie();
     
   }, []);
 
@@ -30,8 +30,8 @@ const Home = () => {
 
   return (
     <>
-      {!auth ? "" : (
-        <Container className='d-flex rounded-sm' style={{height: 800}}>
+      {auth ? "" : (
+        <Container className='d-flex rounded-sm' style={{height: 700}}>
             <Sidebar/>
             <ChatView/>
         </Container>
