@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // readCookie();
+    readCookie();
     
   }, []);
 
