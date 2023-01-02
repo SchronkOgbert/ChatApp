@@ -8,12 +8,16 @@ class JSONEncoder(json.JSONEncoder):
         return str(o)
 
 
-class Chat(models.Model):
+class ProfilePic(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     pfp_link = models.CharField(max_length=2048)
+
+
+class Chat(models.Model):
     name = models.CharField(max_length=256)
 
     def __str__(self):
-        return f'{"{"}"name": {self.name}, "pfp_link": {self.pfp_link}{"}"}'
+        return f'{"{"}"name": {self.name}{"}"}'
 
     def __repr__(self):
         return str(self)
