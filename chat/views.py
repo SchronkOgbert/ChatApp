@@ -1,9 +1,9 @@
-import json
+import datetime
+import hashlib
 
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
-from django.core import serializers
 
 from chat.models import *
 
@@ -18,3 +18,10 @@ def available(request):
 
 def room(request, room_name):
     return render(request, "chat/room.html", {"room_name": room_name})
+
+
+@require_http_methods(['GET'])
+def get_room_code(request):
+    code = hashlib.sha1(str(datetime.datetime.now()))[:8]
+    Chat(code=code).save()
+    return HttpResponse(json.dumps({'code': code}))
