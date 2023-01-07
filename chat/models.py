@@ -14,10 +14,10 @@ class ProfilePic(models.Model):
 
 
 class Chat(models.Model):
-    name = models.CharField(max_length=256)
+    code = models.CharField(max_length=8)
 
     def __str__(self):
-        return f'{"{"}"name": {self.name}{"}"}'
+        return f'{"{"}"name": {self.code}{"}"}'
 
     def __repr__(self):
         return str(self)
