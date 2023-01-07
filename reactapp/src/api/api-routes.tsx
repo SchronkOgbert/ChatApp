@@ -76,3 +76,33 @@ export const doLogin = (user:string ,pwd:string,navigate:any,loggedIn:boolean,se
     console.error ("[ERROR]: Error: " + loginError);  
   }
 };
+
+export const getRoomCode = (csrf:any) =>{
+    axios.get(ApiConstants.chatRoomCode ,{
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFTOKEN': csrf
+      },
+    }).then((response:any) =>{
+      return response.code;
+    }).catch((e:any) => {
+      console.log(e);
+    });
+};
+
+export const doesRoomExist = (csrf:any,room:any) =>{
+  const params = ({
+    "room" : room
+   })
+  axios.get(ApiConstants.checkRoomUrl ,{
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFTOKEN': csrf
+    },
+    params
+  }).then((response:any) =>{
+    return response.code;
+  }).catch((e:any) => {
+    console.log(e);
+  });
+};
