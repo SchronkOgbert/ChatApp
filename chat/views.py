@@ -1,7 +1,7 @@
 import datetime
 import hashlib
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
@@ -25,3 +25,11 @@ def get_room_code(request):
     code = hashlib.sha1(str(datetime.datetime.now()))[:8]
     Chat(code=code).save()
     return HttpResponse(json.dumps({'code': code}))
+
+
+@require_http_methods(['GET'])
+def does_room_exist(request):
+    code = request.GET['room']
+    if not Chat.objects.filter(code=code).exists():
+        return HttpResponseNotFound
+    return HttpResponse(json.dumps({'number': Chat.objects.get(code=code).id}))
