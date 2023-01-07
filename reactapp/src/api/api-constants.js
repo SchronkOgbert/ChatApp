@@ -2,6 +2,8 @@ export const ApiConstants = {
   loginUrl: "/login/",
   registerUrl: "/register/",
   chatUrl: "/chat/available/",
+  chatRoomCode: "/chat/new_code/",
+  checkRoomUrl: "/chat/find_room/",
 
   httpGet: "GET",
   httpPost: "POST",
