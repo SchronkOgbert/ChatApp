@@ -101,8 +101,6 @@ export const doesRoomExist = (csrf:any,room:any) =>{
     },
     params
   }).then((response:any) =>{
-    return response.code;
-  }).catch((e:any) => {
-    console.log(e);
-  });
+    return response.number;
+  })
 };
