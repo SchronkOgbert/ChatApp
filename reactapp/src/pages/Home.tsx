@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar';
 import ChatView from '../components/ChatView';
 import { Container } from 'react-bootstrap';
 import { getChatView } from '../api/api-routes';
+import MainChooseChat from '../components/MainChooseChat';
 
 const Home = () => {
  
@@ -13,7 +14,6 @@ const Home = () => {
 
   useEffect(() => {
     readCookie();
-    
   }, []);
 
   const readCookie = () => {
@@ -32,8 +32,8 @@ const Home = () => {
     <>
       {!auth ? "" : (
         <Container className='d-flex rounded-sm' style={{height: 800}}>
-            <Sidebar/>
-            <ChatView/>
+          <MainChooseChat/>
+            
         </Container>
       )}
     </>

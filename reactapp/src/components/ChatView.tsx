@@ -1,8 +1,12 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
+import RoomNumber from './RoomNumber'
 
 const ChatView = () => {
   return (
-    <div className='bg-primary bg-opacity-25 w-75 rounded-end shadow-lg'></div>
+    <Container className='bg-primary bg-opacity-25 w-75 rounded-end shadow-lg'>
+      <RoomNumber/>
+    </Container>
   )
 }
 
