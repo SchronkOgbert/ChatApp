@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import RoomNumber from './RoomNumber'
+import Cookies from 'js-cookie';
 
 const ChatView = () => {
   return (

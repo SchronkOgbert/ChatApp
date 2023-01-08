@@ -1,24 +1,26 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { ApiConstants } from "./api-constants";
-export const getChatView = (csrf:any , user:any) => {
-  
-        const params = ({
-          "username" : user
-         })
-        axios.get(ApiConstants.chatUrl ,{
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFTOKEN': csrf
-          },
-          params
-        }).then((response:any) =>{
-          console.log(response.data);
-        }).catch((e:any) => {
-          console.log(e);
-        });  
+import { useNavigate } from "react-router-dom";
+import  { redirect } from 'react-router-dom'
 
-};
+// export const getChatView = (csrf:any , user:any) => {
+//         const params = ({
+//           "username" : user
+//          })
+//         axios.get(ApiConstants.chatUrl ,{
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'X-CSRFTOKEN': csrf
+//           },
+//           params
+//         }).then((response:any) =>{
+//           console.log(response.data);
+//         }).catch((e:any) => {
+//           console.log(e);
+//         });  
+
+// };
 
 export const doRegister = (user:string,pwd:string,email:string,navigate:any,registered:boolean) => {
   try {
@@ -77,17 +79,23 @@ export const doLogin = (user:string ,pwd:string,navigate:any,loggedIn:boolean,se
   }
 };
 
+
+
 export const getRoomCode = (csrf:any) =>{
+    let roomCode;
     axios.get(ApiConstants.chatRoomCode ,{
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFTOKEN': csrf
       },
     }).then((response:any) =>{
-      return response.code;
+      console.log(response.data.code);
+      roomCode = response.data.code;
+      Cookies.set("roomCode", roomCode);
     }).catch((e:any) => {
       console.log(e);
     });
+    return roomCode;
 };
 
 export const doesRoomExist = (csrf:any,room:any) =>{
