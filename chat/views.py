@@ -22,7 +22,8 @@ def room(request, room_name):
 
 @require_http_methods(['GET'])
 def get_room_code(request):
-    code = hashlib.sha1(str(datetime.datetime.now()))[:8]
+    hashlib.sha1().update(str(datetime.datetime.now()).encode('utf-8'))
+    code = hashlib.sha1().hexdigest()[:8]
     Chat(code=code).save()
     return HttpResponse(json.dumps({'code': code}))
 
