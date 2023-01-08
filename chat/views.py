@@ -1,5 +1,6 @@
-import datetime
 import hashlib
+import random
+import time
 
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
@@ -22,9 +23,8 @@ def room(request, room_name):
 
 @require_http_methods(['GET'])
 def get_room_code(request):
-    hashlib.sha1().update(str(datetime.datetime.now()).encode('utf-8'))
+    hashlib.sha1().update(str(random.randint(1, 100000) + time.time()).encode('utf-8'))
     code = hashlib.sha1().hexdigest()[:8]
-    Chat(code=code).save()
     return HttpResponse(json.dumps({'code': code}))
 
 
