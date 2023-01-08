@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import Sidebar from '../components/Sidebar';
 import ChatView from '../components/ChatView';
 import { Container } from 'react-bootstrap';
-import { getChatView } from '../api/api-routes';
+// import { getChatView } from '../api/api-routes';
 import MainChooseChat from '../components/MainChooseChat';
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
     const csrfToken = Cookies.get("csrfToken");
       if (csrfToken) {
         setAuth(true);
-        getChatView(csrfToken,user);
+        // getChatView(csrfToken,user);
       } else {
         setAuth(false);
         navigate("/login");
