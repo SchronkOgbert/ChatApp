@@ -8,7 +8,7 @@ const [success, setSuccess] = useState(false);
   return (
     <>
     {success ? (
-        <NewChat/> //AICI TREBUIE DUS USERUL LA CHATUL CORESPONDENT CODULUI
+        <NewChat/>
     ) : (
       <Container className='d-flex justify-content-center align-items-center bg-primary bg-opacity-75 rounded shadow-lg' style={{height:800}}>
       <div className='d-flex justify-content-center align-items-center bg-dark bg-opacity-75 rounded shadow-lg' style={{height: 150, marginTop: -200}}>

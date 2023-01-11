@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 const StartNewChat = () => {
   return (
     <>
-    <Link to="/createChat" onClick={getRoomCode(Cookies.get("csrfToken"))}> 
+    <Link to="#" onClick={() => getRoomCode(Cookies.get("csrfToken"))}> 
         <div className='d-flex justify-content-center align-items-center bg-dark bg-opacity-75 rounded shadow-lg' style={{width: 200, height: 80, marginTop: -100}}>
            <div className='fw-bold fs-4' style={{color:'white'}}>
                 Create Chat

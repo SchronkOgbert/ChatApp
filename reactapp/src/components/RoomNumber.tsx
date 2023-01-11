@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react'
 import { Container } from 'react-bootstrap'
-import { getRoomCode } from '../api/api-routes'
 import Cookies from 'js-cookie';
 
 const RoomNumber = () => {

@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Register from './pages/Register'; 
 import ChatCheck from './components/ChatCheck';
 import NewChat from './components/NewChat';
+import ChatRoom from './components/ChatRoom';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/register" element={<Register />}/>
             <Route path="/createChat" element={<NewChat/>}/>
             <Route path="/chatCheck" element={<ChatCheck/>}/>
+            <Route path="/chatRoom" element={<ChatRoom/>}/>
           </Routes>
       </Container>
     </>

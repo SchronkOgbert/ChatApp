@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { ApiConstants } from "./api-constants";
-import { useNavigate } from "react-router-dom";
+import { RedirectFunction } from "react-router-dom";
 import  { redirect } from 'react-router-dom'
 
 // export const getChatView = (csrf:any , user:any) => {
@@ -41,7 +41,7 @@ export const doRegister = (user:string,pwd:string,email:string,navigate:any,regi
       if (response.data.success){
         console.log("response.data.success!")
       } else {
-        console.log("mias pula")
+        console.log("ba astia")
       }
     }).catch((e:any) => {
       console.log(e);
@@ -92,10 +92,10 @@ export const getRoomCode = (csrf:any) =>{
       console.log(response.data.code);
       roomCode = response.data.code;
       Cookies.set("roomCode", roomCode);
+      window.location.replace("/createChat")
     }).catch((e:any) => {
       console.log(e);
     });
-    return roomCode;
 };
 
 export const doesRoomExist = (csrf:any,room:any) =>{
