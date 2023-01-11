@@ -12,11 +12,6 @@ class ChatRoomConsumer(WebsocketConsumer):
         user =self.scope["url_route"]["kwargs"]["user"]
         self.room_group_name = "chat_%s" % self.room_name
 
-        # either get the chat or try to create it
-        obj, created = Chat.objects.get_or_create(code=code)
-
-        # if a new chat was created, we want to also add some bindings, meaning who has access to the chat
-
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name, self.channel_name
@@ -24,8 +19,7 @@ class ChatRoomConsumer(WebsocketConsumer):
 
         self.accept()
         self.send(text_data=json.dumps({'message': {'success': True}}))
-        if not created:
-            self.send(text_data=json.dumps({'message': f'{user} connected', 'user': 'System'}))
+        self.send(text_data=json.dumps({'message': f'{user} connected', 'user': 'System'}))
 
     def disconnect(self, close_code):
         # Leave room group

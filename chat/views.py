@@ -15,7 +15,9 @@ def room(request, room_name):
 @require_http_methods(['GET'])
 def get_room_code(request):
     code = binascii.hexlify(os.urandom(4)).decode()
-    return HttpResponse(json.dumps({'code': code}))
+    new_chat = Chat(code=code)
+    new_chat.save()
+    return HttpResponse(json.dumps({'code': new_chat.code, 'id': new_chat.id}))
 
 
 @require_http_methods(['GET'])
