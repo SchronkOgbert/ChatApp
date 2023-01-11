@@ -24,5 +24,5 @@ def get_room_code(request):
 def does_room_exist(request):
     code = request.GET['room']
     if not Chat.objects.filter(code=code).exists():
-        return HttpResponseNotFound
+        return HttpResponseNotFound()
     return HttpResponse(json.dumps({'number': Chat.objects.get(code=code).id}))

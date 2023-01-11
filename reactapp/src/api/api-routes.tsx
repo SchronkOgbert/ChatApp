@@ -92,6 +92,7 @@ export const getRoomCode = (csrf:any) =>{
       console.log(response.data.code);
       roomCode = response.data.code;
       Cookies.set("roomCode", roomCode);
+      Cookies.set("roomNumber",response.data.id);
       window.location.replace("/createChat")
     }).catch((e:any) => {
       console.log(e);
@@ -99,16 +100,24 @@ export const getRoomCode = (csrf:any) =>{
 };
 
 export const doesRoomExist = (csrf:any,room:any) =>{
+  room=room.trim();
   const params = ({
     "room" : room
    })
+   console.log(room + " ROOOOMMMM");
   axios.get(ApiConstants.checkRoomUrl ,{
+    params,
     headers: {
       'Content-Type': 'application/json',
       'X-CSRFTOKEN': csrf
     },
-    params
   }).then((response:any) =>{
-    return response.number;
-  })
+    const roomId=response.data.number;
+    Cookies.set("roomCode",room);
+    Cookies.set("roomNumber",roomId);
+    window.location.replace("/chatCheck/" + roomId);
+
+  }).catch((e:any) => {
+    throw new Error(e.response);
+  });
 };
