@@ -1,14 +1,22 @@
-export default function getChatSocket(roomName, user, code) {
+export default function getChatSocket(
+  roomName,
+  user,
+  code,
+  onMessage,
+  onClose
+) {
   const chatSocket = new WebSocket(
     "ws://" +
       window.location.host +
       "/chat/ws/chat/" +
-      params.room_name +
+      roomName +
       "/" +
-      params.user +
+      user +
       "/" +
-      params.code +
+      code +
       "/"
   );
+  chatSocket.onMessage = onMessage;
+  chatSocket.onClose = onClose;
   return chatSocket;
 }
