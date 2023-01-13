@@ -7,7 +7,6 @@ const NewChat = () => {
   return (
     <>
     <Container className='d-flex rounded-sm' style={{height: 800}}>
-        
         <ChatView/> 
     </Container>
     
