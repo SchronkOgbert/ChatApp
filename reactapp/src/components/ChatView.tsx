@@ -1,8 +1,11 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import RoomNumber from './RoomNumber'
 import Cookies from 'js-cookie';
 import Image from 'react-bootstrap';
+import SendMessage from './SendMessage';
+import Message from './Message';
+import Chat from './Chat';
 
 interface TextProps{
   content: string
@@ -37,14 +40,16 @@ function Text({ content }: TextProps) {
 
 const ChatView  = () => {
 
-  const [text,setText]=React.useState("https://www.emag.ro/ CEVA TEXT PE AICI");
-  const [poza,setPoza]=React.useState("https://upload.wikimedia.org/wikipedia/commons/4/43/Cute_dog.jpg");
+  // const [text,setText]= useState("https://www.emag.ro/ CEVA TEXT PE AICI");
+  // const [poza,setPoza]= useState("https://upload.wikimedia.org/wikipedia/commons/4/43/Cute_dog.jpg");
 
   return (
     <>
-    <div className='bg-primary bg-opacity-25 w-75 rounded-end shadow-lg'>
+    <div className='bg-primary bg-opacity-50 w-100 rounded shadow-lg'>
         <RoomNumber />
-        <Text content={text}/>
+        <Chat/>
+
+        {/* <Text content={text}/> */}
         
     </div>
     </>

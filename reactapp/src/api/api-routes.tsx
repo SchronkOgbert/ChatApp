@@ -93,7 +93,7 @@ export const getRoomCode = (csrf:any) =>{
       roomCode = response.data.code;
       Cookies.set("roomCode", roomCode);
       Cookies.set("roomNumber",response.data.id);
-      window.location.replace("/createChat")
+      window.location.replace("/chat/ws/chat/" + Cookies.get("roomNumber"))
     }).catch((e:any) => {
       console.log(e);
     });
@@ -115,7 +115,7 @@ export const doesRoomExist = (csrf:any,room:any) =>{
     const roomId=response.data.number;
     Cookies.set("roomCode",room);
     Cookies.set("roomNumber",roomId);
-    window.location.replace("/chatCheck/" + roomId);
+    window.location.replace("/chat/ws/chat/" + Cookies.get("roomNumber"));
 
   }).catch((e:any) => {
     throw new Error(e.response);
