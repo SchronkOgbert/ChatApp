@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container, Form, InputGroup } from 'react-bootstrap'
 import Message from './Message'
 import SendMessage from './SendMessage'
@@ -10,28 +10,58 @@ import { useReducer } from 'react';
 
     var chatSocket:any = null;
     let listMessages:any[] = []
-    let messages: any[] = [];
+    let messages:any[] = []
+    var rendering = false;
 
-    chatSocket = getChatSocket(
-      Cookies.get("roomNumber"),
-      Cookies.get("user"),
-      Cookies.get("roomCode")
-    )
+    // chatSocket = getChatSocket(
+    //   Cookies.get("roomNumber"),
+    //   Cookies.get("user"),
+    //   Cookies.get("roomCode")
+    // )
 
-    chatSocket.onopen = () => {
-      console.log('connected')
-    }
-    chatSocket.onmessage = (message:any) => {
-          let mesajJSON = JSON.parse(message.data);
-          console.log(mesajJSON.message);
-          messages.push(JSON.stringify(mesajJSON.message).slice(1,-1));
-    }
+    // chatSocket.onopen = () => {
+    //   console.log('connected')
+    // }
+
+    // chatSocket.onmessage = (message:any) => {
+    //   rendering = false;
+    //   let mesajJSON = JSON.parse(message.data);
+    //   console.log("inside webhook"+mesajJSON.message);
+    //   messages.push(JSON.stringify(mesajJSON.message).slice(1,-1));
+    //   rendering = true;
+    // }
+    
+    
 const Chat = () => {
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");    
+    const [isPaused, setPause] = useState(false); 
+    const ws:any = useRef(null);
 
-    // useEffect(()=>{
-      
-    // })
+    useEffect(()=>{
+      console.log("useEffect")
+      ws.current = getChatSocket(
+        Cookies.get("roomNumber"),
+        Cookies.get("user"),
+        Cookies.get("roomCode")
+      )
+      const wsCurrent = ws.current;
+      return () => {
+        wsCurrent.close();
+      }
+
+    }, [])
+
+    useEffect(()=>{
+      if(!ws.current) return;
+      ws.current.onmessage = (message:any) => {
+        rendering = false;
+        let mesajJSON = JSON.parse(message.data);
+        console.log("inside webhook"+mesajJSON.message);
+        messages.push(JSON.stringify(mesajJSON.message).slice(1,-1));
+        rendering = true;
+      }
+    }, [isPaused]);
+
 
     function handleSubmit (event:any){
       event.preventDefault();
@@ -70,3 +100,7 @@ const Chat = () => {
 }
 
 export default Chat
+
+function newDate() {
+  throw new Error('Function not implemented.');
+}
