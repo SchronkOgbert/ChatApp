@@ -36,9 +36,7 @@ class ChatRoomConsumer(WebsocketConsumer):
         user = text_data_json["user"]
 
         # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name, {'user': user, "message": message}
-        )
+        self.send(text_data=json.dumps({'user':user, "message":message}))
 
     # Receive message from room group
     # TODO: check if this is still needed

@@ -1,51 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Form, InputGroup } from 'react-bootstrap'
 import Message from './Message'
 import SendMessage from './SendMessage'
 import getChatSocket from '../api/WebSockets';
 import Cookies from 'js-cookie';
+import { useReducer } from 'react';
 
 
-class messageInfo{
-    userName:String | undefined;
-    postDate:Date | undefined;
-    text:String | undefined;
-}
 
+    var chatSocket:any = null;
+    let listMessages:any[] = []
+    let messages: any[] = [];
+
+    chatSocket = getChatSocket(
+      Cookies.get("roomNumber"),
+      Cookies.get("user"),
+      Cookies.get("roomCode")
+    )
+
+    chatSocket.onopen = () => {
+      console.log('connected')
+    }
+    chatSocket.onmessage = (message:any) => {
+          let mesajJSON = JSON.parse(message.data);
+          console.log(mesajJSON.message);
+          messages.push(JSON.stringify(mesajJSON.message).slice(1,-1));
+    }
 const Chat = () => {
     const [message, setMessage] = useState("");
 
-    console.log(Cookies.get("roomNumber") + " this is roomNumber");
-    const chatSocket = getChatSocket(
-        Cookies.get("roomNumber"),
-        Cookies.get("user"),
-        Cookies.get("roomCode"),
-        (e:any) => {
-            console.log(e);
-            messages.push(e);
-        },
-        (e:any) => {
-            
-        }
-    )
+    // useEffect(()=>{
+      
+    // })
 
-    function handleSubmit(event:any){
-        chatSocket.send(JSON.stringify({
-            'message': message,
-            'user': Cookies.get("user")
-        }));
-        
-        setMessage("")
-        event.preventDefault();
-      }
-    
-    const messages: messageInfo[] = [];
-
-    const listMessages = messages.map((message) => 
+    function handleSubmit (event:any){
+      event.preventDefault();
+      chatSocket.send(JSON.stringify({
+          'message': message,
+          'user': Cookies.get("user")
+      }));
+      listMessages = messages.map((item) => 
       <div>
-        <Message message/>
+        <Message message={item}/>
       </div>
-    )
+      )
+      setMessage("");    
+  }
+  
   return (
     <Container className='d-flex flex-column justify-content-center p-5' style={{marginTop:500}}>
 
@@ -58,7 +59,7 @@ const Chat = () => {
                   required 
                   value = {message} 
                   placeholder={"Enter message"}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={(e) => setMessage(e.target.value)}  
                   className='w-100'
                   />      
             </InputGroup>

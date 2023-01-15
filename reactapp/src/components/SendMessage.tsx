@@ -6,8 +6,8 @@ const SendMessage = () => {
   const [message, setMessage] = useState("");
 
   function handleSubmit(event:any){
-    setMessage("")
     event.preventDefault();
+    setMessage("")
   }
 
   return (

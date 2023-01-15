@@ -1,9 +1,7 @@
 export default function getChatSocket(
   roomName,
   user,
-  code,
-  onMessage,
-  onClose
+  code
 ) {
   console.log(roomName);
   const chatSocket = new WebSocket(
@@ -17,7 +15,5 @@ export default function getChatSocket(
       code +
       "/"
   );
-  chatSocket.onMessage = onMessage;
-  chatSocket.onClose = onClose;
   return chatSocket;
 }
