@@ -9,7 +9,6 @@ const Sidebar = () => {
   return (
     <div className='bg-primary bg-opacity-75 w-25 rounded-start shadow-lg'>
       <SideNav/>
-      <Search/>
       <Chats/>
     </div>
   )

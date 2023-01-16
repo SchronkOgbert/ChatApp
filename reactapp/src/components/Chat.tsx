@@ -33,13 +33,19 @@ var rendering = false;
 
 const Chat = () => {
     const [message, setMessage] = useState("");
-    const [isPaused, setPause] = useState(false);
+    const [validated, setValidated] = useState(false);
     const [ws, setWS] = useState(getChatSocket(
         Cookies.get("roomNumber"),
         Cookies.get("user"),
         Cookies.get("roomCode")
     ))
     const [webSocketReady, setWebSocketReady] = useState(false);
+    const ref:any = useRef()
+
+    useEffect(() => {
+      console.log("executing")
+      ref.current.scrollIntoView({behaviour:"smooth"});
+    }, [webSocketReady])
 
     useEffect(() => {
         ws.onopen = (e) => {
@@ -49,11 +55,11 @@ const Chat = () => {
 
         ws.onmessage = (message: any) => {
             let mesajJSON = JSON.parse(message.data);
-            console.log("inside webhook: " + mesajJSON.message);
             messages.push(JSON.stringify(mesajJSON.message).slice(1, -1));
+            let user = JSON.stringify(mesajJSON.user).slice(1, -1);
             listMessages = messages.map((item) =>
                 <div>
-                    <Message message={item}/>
+                    <Message user={user} message={item}/>
                 </div>)
             setWebSocketReady(true);
         }
@@ -63,22 +69,31 @@ const Chat = () => {
 
 
     function handleSubmit(event: any) {
-        event.preventDefault();
-        if (ws === null) return;
-        ws.send(JSON.stringify({
-            'message': message,
-            'user': Cookies.get("user")
-        }));
-        setWebSocketReady(false);
-        setMessage("");
+        if (message != ""){
+          event.preventDefault();
+          if (ws === null) return;
+          ws.send(JSON.stringify({
+              'message': message,
+              'user': Cookies.get("user")
+          }));
+          setWebSocketReady(false);
+          setMessage("");
+        } 
+        else {
+          event.preventDefault();
+        }
+        
     }
 
-    return (
-        <Container className='d-flex flex-column justify-content-center p-5' style={{marginTop: 500}}>
 
+    return (
+        <Container className='d-flex flex-column justify-content-center p-5'>
+          <div className='d-flex flex-column justify-content-start overflow-auto' style={{height:550, marginTop:"auto"}}>
             {webSocketReady ? listMessages : listMessages + "loading.."}
+            <div ref={ref}/>
+          </div >
             {/* This sends chat */}
-            <Form noValidate onSubmit={handleSubmit} className='' style={{marginTop: 50}}>
+            <Form noValidate onSubmit={handleSubmit} className='mt-5'>
                 <Form.Group className="d-flex flex-column align-items-start" controlId="sendMessageForm">
                     <InputGroup className='d-flex flex-column' style={{height: 55}}>
                         <Form.Control
