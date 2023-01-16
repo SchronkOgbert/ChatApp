@@ -11,7 +11,7 @@ interface TextProps{
 const URL_REGEX =
 	/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
 
-const IMG_REGEX = /.*\.(gif|jpe?g|bmp|png)$/igm;
+const IMG_REGEX = /^(.*(jpg|jpeg|png|webp|bmp).*)$/igm;
 
 function Text({ content }: TextProps) {
   const words = content.split(' ');

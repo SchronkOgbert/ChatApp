@@ -13,6 +13,7 @@ let messages: any[] = []
 
 const Chat = () => {
     const [message, setMessage] = useState("");
+    const [user, setUser] = useState("");
     const [isPaused, setPause] = useState(false);
     const [ws, setWS] = useState(getChatSocket(
         Cookies.get("roomNumber"),
@@ -40,11 +41,7 @@ const Chat = () => {
         ws.onmessage = (message: any) => {
             let mesajJSON = JSON.parse(message.data);
             messages.push(JSON.stringify(mesajJSON.message).slice(1, -1));
-            let user = JSON.stringify(mesajJSON.user).slice(1, -1);
-            listMessages = messages.map((item) =>
-                <div>
-                    <Message user={user} message={item}/>
-                </div>)
+            setUser(JSON.stringify(mesajJSON.user).slice(1, -1));
             setWebSocketReady(true);
             setNewMessage(true);
         }
@@ -56,7 +53,7 @@ const Chat = () => {
     useEffect(() => {
         listMessages = messages.map((item) =>
             <div>
-                <Message message={item}/>
+                <Message user={user} message={item}/>
             </div>)
         setNewMessage(false);
     }, [newMessage])
@@ -83,7 +80,7 @@ const Chat = () => {
     return (
         <Container className='d-flex flex-column justify-content-center p-5'>
           <div className='d-flex flex-column justify-content-start overflow-auto' style={{height:550, marginTop:"auto"}}>
-            {webSocketReady ? listMessages : listMessages + "loading.."}
+            {webSocketReady ? listMessages : "loading.."}
             <div ref={ref}/>
           </div >
             {/* This sends chat */}
