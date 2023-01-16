@@ -3,7 +3,6 @@ export default function getChatSocket(
   user,
   code
 ) {
-  console.log(roomName);
   const chatSocket = new WebSocket(
     "ws://" +
       window.location.host +

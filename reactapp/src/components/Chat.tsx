@@ -7,40 +7,24 @@ import Cookies from 'js-cookie';
 import {useReducer} from 'react';
 
 
-var chatSocket: any = null;
 let listMessages: any[] = []
 let messages: any[] = []
-var rendering = false;
-
-// chatSocket = getChatSocket(
-//   Cookies.get("roomNumber"),
-//   Cookies.get("user"),
-//   Cookies.get("roomCode")
-// )
-
-// chatSocket.onopen = () => {
-//   console.log('connected')
-// }
-
-// chatSocket.onmessage = (message:any) => {
-//   rendering = false;
-//   let mesajJSON = JSON.parse(message.data);
-//   console.log("inside webhook"+mesajJSON.message);
-//   messages.push(JSON.stringify(mesajJSON.message).slice(1,-1));
-//   rendering = true;
-// }
 
 
 const Chat = () => {
     const [message, setMessage] = useState("");
-    const [validated, setValidated] = useState(false);
+    const [isPaused, setPause] = useState(false);
     const [ws, setWS] = useState(getChatSocket(
         Cookies.get("roomNumber"),
         Cookies.get("user"),
         Cookies.get("roomCode")
     ))
     const [webSocketReady, setWebSocketReady] = useState(false);
+    const [newMessage, setNewMessage] = useState(false);
     const ref:any = useRef()
+
+
+    console.log('RE-RENDER: ' + webSocketReady);
 
     useEffect(() => {
       console.log("executing")
@@ -62,10 +46,20 @@ const Chat = () => {
                     <Message user={user} message={item}/>
                 </div>)
             setWebSocketReady(true);
+            setNewMessage(true);
         }
         return () => ws.close();
+               
         }, [ws]
     );
+
+    useEffect(() => {
+        listMessages = messages.map((item) =>
+            <div>
+                <Message message={item}/>
+            </div>)
+        setNewMessage(false);
+    }, [newMessage])
 
 
     function handleSubmit(event: any) {
