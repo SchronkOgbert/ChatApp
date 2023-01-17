@@ -39,18 +39,11 @@ function Text({ content }: TextProps) {
 }
 
 const ChatView  = () => {
-
-  
-  // const [poza,setPoza]= useState("https://upload.wikimedia.org/wikipedia/commons/4/43/Cute_dog.jpg");
-
   return (
     <>
     <div className='bg-primary bg-opacity-50 w-100 rounded shadow-lg' style={{overflow: "none"}}>
         <RoomNumber />
-        <Chat/>
-
-        {/* <Text content={text}/> */}
-        
+        <Chat/> 
     </div>
     </>
  

@@ -31,9 +31,8 @@ const Home = () => {
   return (
     <>
       {!auth ? "" : (
-        <Container className='d-flex rounded-sm' style={{height: 800}}>
+        <Container className='d-flex rounded-sm' style={{height: "80vh"}}>
           <MainChooseChat/>
-            
         </Container>
       )}
     </>

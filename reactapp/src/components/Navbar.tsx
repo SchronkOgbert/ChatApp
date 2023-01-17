@@ -31,7 +31,7 @@ import Cookies from 'js-cookie';
   return (
     <>
     {!loggedIn ? (
-       <NavbarBs sticky='top' className='bg-white shadow-sm'>
+       <NavbarBs sticky='top' className='bg-white shadow-sm' style={{height:55}}>
         <Container className='d-flex flex-column align-items-center justify-content-between'>
           <Nav className='me-auto fw-bold fs-4'>
             <Nav.Link as={NavLink} to='/login' className='text-primary'>Chat App</Nav.Link>
@@ -39,7 +39,7 @@ import Cookies from 'js-cookie';
         </Container>
       </NavbarBs>
     ) : (
-      <NavbarBs sticky='top' className='bg-white shadow-md'>
+      <NavbarBs sticky='top' className='bg-white shadow-md' style={{height:55}}>
         <Container className='container-fluid me-auto fw-bold fs-4'>
             <Nav.Link as={NavLink} to='/' className='text-primary'>Chat App</Nav.Link>
             <Button

@@ -79,7 +79,7 @@ const Chat = () => {
 
     return (
         <Container className='d-flex flex-column justify-content-center p-5'>
-          <div className='d-flex flex-column justify-content-start overflow-auto' style={{height:550, marginTop:"auto"}}>
+          <div className='d-flex flex-column justify-content-start overflow-auto' style={{height:400, marginTop:"auto"}}>
             {webSocketReady ? listMessages : "loading.."}
             <div ref={ref}/>
           </div >

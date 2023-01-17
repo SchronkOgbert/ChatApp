@@ -19,7 +19,7 @@ class ChatRoomConsumer(WebsocketConsumer):
         )
 
         self.accept()
-        self.send(text_data=json.dumps({'message': {'success': True}}))
+        # self.send(text_data=json.dumps({'message': {'success': True}}))
         self.send(text_data=json.dumps({'message': f'{user} connected', 'user': 'System'}))
 
     # Receive message from WebSocket

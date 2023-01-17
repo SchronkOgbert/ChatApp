@@ -24,7 +24,7 @@ const [roomNumber,setRoomNumber] = useState(" ");
     {success ? (
         <NewChat/>
     ) : (
-      <Container className='d-flex justify-content-center align-items-center bg-primary bg-opacity-75 rounded shadow-lg' style={{height:700}}>
+      <Container className='d-flex justify-content-center align-items-center bg-primary bg-opacity-50 rounded shadow-lg' style={{height:650}}>
       <div className='d-flex justify-content-center align-items-center bg-dark bg-opacity-75 rounded shadow-lg' style={{height: 150, marginTop: -200}}>
           <div className='d-flex justify-content-center align-items-center flex-column fw-bold fs-5 m-3' style={{color:'white'}}>
               <div>Enter Chat Code</div>

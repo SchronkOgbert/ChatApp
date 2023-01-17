@@ -44,7 +44,7 @@ const Message = (props : any) => {
   const mesaj = props.message
   const user = props.user
   return (
-    <Container className='d-flex align-items-center rounded shadow-lg mt-1' style={{background:"white", color:'black', height:"auto", width:"auto", margin:"auto" }}>     
+    <Container className='d-flex align-items-center rounded bg-white bg-opacity-75 shadow-sm mt-1' style={{color:'black', height:"auto", width:"auto", margin:"auto" }}>     
        <div> 
        {user}:
       </div>

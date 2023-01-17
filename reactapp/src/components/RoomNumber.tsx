@@ -5,10 +5,10 @@ const RoomNumber = () => {
   
   return (
     <>
-      <Container className='d-flex justify-content-center align-items-center bg-primary fw-bold bg-opacity-75 w-25 rounded shadow-lg' style={{color:'white', marginLeft:900, height:50}}>
-        <div>
+      <Container className='d-flex justify-content-center align-items-center bg-primary fw-bold bg-opacity-75 w-25 rounded shadow-lg' style={{color:'white', marginLeft:"75%", height:50}}>
+
           {'Room code: ' +  Cookies.get("roomCode")}
-        </div>
+    
       </Container>
     </>
   )

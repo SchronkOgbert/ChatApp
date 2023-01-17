@@ -8,8 +8,8 @@ const StartNewChat = () => {
   return (
     <>
     <Link to="#" onClick={() => getRoomCode(Cookies.get("csrfToken"))}> 
-        <div className='d-flex justify-content-center align-items-center bg-dark bg-opacity-75 rounded shadow-lg' style={{width: 200, height: 80, marginTop: -100}}>
-           <div className='fw-bold fs-4' style={{color:'white'}}>
+        <div className='d-flex bg-white text-primary justify-content-center align-items-center bg-opacity-75 rounded shadow-lg p-3' style={{}}>
+           <div className='fw-bold fs-4'>
                 Create Chat
            </div>
         </div>
