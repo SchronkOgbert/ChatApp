@@ -4,7 +4,8 @@ import {useNavigate} from 'react-router-dom'
 import Sidebar from '../components/Sidebar';
 import ChatView from '../components/ChatView';
 import { Container } from 'react-bootstrap';
-import { getChatView } from '../api/api-routes';
+// import { getChatView } from '../api/api-routes';
+import MainChooseChat from '../components/MainChooseChat';
 
 const Home = () => {
  
@@ -13,7 +14,6 @@ const Home = () => {
 
   useEffect(() => {
     readCookie();
-    
   }, []);
 
   const readCookie = () => {
@@ -21,7 +21,7 @@ const Home = () => {
     const csrfToken = Cookies.get("csrfToken");
       if (csrfToken) {
         setAuth(true);
-        getChatView(csrfToken,user);
+        // getChatView(csrfToken,user);
       } else {
         setAuth(false);
         navigate("/login");
@@ -31,9 +31,8 @@ const Home = () => {
   return (
     <>
       {!auth ? "" : (
-        <Container className='d-flex rounded-sm' style={{height: 800}}>
-            <Sidebar/>
-            <ChatView/>
+        <Container className='d-flex rounded-sm' style={{height: "80vh"}}>
+          <MainChooseChat/>
         </Container>
       )}
     </>

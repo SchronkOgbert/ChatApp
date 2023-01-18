@@ -5,7 +5,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Register from './pages/Register'; 
-
+import ChatCheck from './components/ChatCheck';
+import NewChat from './components/NewChat';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
             <Route path="/login" element={<Login />}/>
             <Route path="/" element={<Home />}/>
             <Route path="/register" element={<Register />}/>
+            <Route path="/chat/ws/chat/:roomId" element={<NewChat/>}/>
+            <Route path="/chatCheck" element={<ChatCheck/>}/>
           </Routes>
       </Container>
     </>
