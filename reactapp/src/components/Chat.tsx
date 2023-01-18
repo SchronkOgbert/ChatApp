@@ -62,10 +62,11 @@ const Chat = () => {
     function handleSubmit(event: any) {
         if (message != ""){
           event.preventDefault();
+          const usr = Cookies.get("user");
           if (ws === null) return;
           ws.send(JSON.stringify({
-              'message': message,
-              'user': Cookies.get("user")
+              'message': usr + ": " + message,
+              'user': usr
           }));
           setWebSocketReady(false);
           setMessage("");
