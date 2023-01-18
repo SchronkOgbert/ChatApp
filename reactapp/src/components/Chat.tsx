@@ -65,7 +65,7 @@ const Chat = () => {
           const usr = Cookies.get("user");
           if (ws === null) return;
           ws.send(JSON.stringify({
-              'message': usr + ": " + message,
+              'message': usr + " " + message,
               'user': usr
           }));
           setWebSocketReady(false);

@@ -42,17 +42,17 @@ function Text({ content }: TextProps) {
 const Message = (props : any) => {
 
   let message = props.message
-  const user = message.split(' ',1);
-  message=message.slice(user.length-1);
+  let user = message.split(' ',1);
+  console.log(user)
+  console.log(user[0].length)
+  message=message.slice(user[0].length);
   return (
     <>
-   
-    <Container className='d-flex  rounded bg-white bg-opacity-75 shadow-sm mt-1 flex-column justify-content-start' style={{color:'black', height:"auto", width:"auto", margin:"auto" }}>
-    <div>
+    <Container className='d-flex rounded bg-white bg-opacity-75 shadow-sm mt-1 flex-column justify-content-start' style={{color:'black', height:"auto", width:"auto", margin:"auto" }}>
+      <span className="mt-2" style={{fontWeight:"bold", marginLeft:6}}>
       {user}
-    </div>     
+      </span>
       <Text content={message}/>
-    
     </Container>
     </>
   )
