@@ -4,9 +4,7 @@ export default function getChatSocket(
   code
 ) {
   const chatSocket = new WebSocket(
-    "ws://" +
-      window.location.host +
-      "/chat/ws/chat/" +
+    "ws://vacabaltata.ddns.net:8000/chat/ws/chat/" +
       roomName +
       "/" +
       user +
