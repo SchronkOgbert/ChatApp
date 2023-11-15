@@ -1,24 +1,14 @@
 import Cookies from 'js-cookie';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Container } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom';
-import { doesRoomExist, getRoomCode } from '../api/api-routes';
+import { Link } from 'react-router-dom';
+import { doesRoomExist } from '../api/api-routes';
 import NewChat from './NewChat';
 
 const ChatCheck = () => {
+const [success] = useState(false);
+const [roomNumber,setRoomNumber] = useState("");
 
-
-const checkRoom = () => {
-  try {
-    doesRoomExist(Cookies.get("csrfToken"),roomNumber)
-  } 
-  catch (error) {
-    console.log("dani inlocuieste console log cu ceva care chiar are sens");
-  }
-}
-
-const [success, setSuccess] = useState(false);
-const [roomNumber,setRoomNumber] = useState(" ");
   return (
     <>
     {success ? (

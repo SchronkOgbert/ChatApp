@@ -1,17 +1,9 @@
-import React, { useState } from 'react'
-import { Container, Form, InputGroup } from 'react-bootstrap'
+import { useState } from 'react'
+import { Form, InputGroup } from 'react-bootstrap'
 
 const Search = () => {
 
-    const [username, setUsername] = useState("")
-
-    const handleSearch = () => {
-        //search route
-      }
-    
-    const handleKey = (e:any) => {
-        e.code === "Enter" && handleSearch();
-    }
+    const [username, setUsername] = useState("");
 
   return (
     <>

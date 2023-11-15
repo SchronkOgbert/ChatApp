@@ -1,5 +1,3 @@
-import React from 'react'
-import { Button, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getRoomCode } from '../api/api-routes'
 import Cookies from 'js-cookie'

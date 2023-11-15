@@ -91,17 +91,11 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-with open('db_config.json') as config_file:
-    config = json.load(config_file)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config['db_dev'],
-        'USER': config['db_usr_dev'],
-        'PASSWORD': config['db_pwd_dev'],
-        'HOST': config['host'],
-        'PORT': config['port'],
+        'ENGINE': 'django.db.backends.sqlite3',  # Use the appropriate database engine
+        'NAME': BASE_DIR / 'db.sqlite3',       # Path to the database file
     }
 }
 

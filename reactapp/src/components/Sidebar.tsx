@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import Search from './Search'
 import SideNav from './SideNav'
 
 const Sidebar = () => {

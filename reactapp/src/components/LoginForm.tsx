@@ -31,7 +31,7 @@ const LoginForm = () => {
       navigate('/')
     }
     
-    },[user, pwd, loggedIn])
+    },[user, pwd, loggedIn, navigate])
 
   const checkUserValidation = () => {
     if(user.length === 0){

@@ -1,10 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Container, Form, InputGroup} from 'react-bootstrap'
 import Message from './Message'
-import SendMessage from './SendMessage'
 import getChatSocket from '../api/WebSockets';
 import Cookies from 'js-cookie';
-import {useReducer} from 'react';
 
 
 let listMessages: any[] = []
@@ -14,7 +12,6 @@ let messages: any[] = []
 const Chat = () => {
     const [message, setMessage] = useState("");
     const [user, setUser] = useState("");
-    const [isPaused, setPause] = useState(false);
     const [ws, setWS] = useState(getChatSocket(
         Cookies.get("roomNumber"),
         Cookies.get("user"),
@@ -56,11 +53,11 @@ const Chat = () => {
                 <Message user={user} message={item}/>
             </div>)
         setNewMessage(false);
-    }, [newMessage])
+    }, [newMessage, user])
 
 
     function handleSubmit(event: any) {
-        if (message != ""){
+        if (message !== ""){
           event.preventDefault();
           const usr = Cookies.get("user");
           if (ws === null) return;
@@ -84,7 +81,6 @@ const Chat = () => {
             {webSocketReady ? listMessages : "loading.."}
             <div ref={ref}/>
           </div >
-            {/* This sends chat */}
             <Form noValidate onSubmit={handleSubmit} className='mt-5'>
                 <Form.Group className="d-flex flex-column align-items-start" controlId="sendMessageForm">
                     <InputGroup className='d-flex flex-column' style={{height: 55}}>
@@ -104,6 +100,3 @@ const Chat = () => {
 
 export default Chat
 
-function newDate() {
-    throw new Error('Function not implemented.');
-}

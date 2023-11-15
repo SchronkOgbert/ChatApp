@@ -1,5 +1,3 @@
-import React from 'react'
-import Sidebar from './Sidebar'
 import ChatView from './ChatView'
 import { Container } from 'react-bootstrap'
 

@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
 
 
@@ -9,7 +8,7 @@ interface TextProps{
 }
 
 const URL_REGEX =
-	/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
+	/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
 
 const IMG_REGEX = /^(.*(jpg|jpeg|png|webp|bmp).*)$/igm;
 
@@ -21,12 +20,12 @@ function Text({ content }: TextProps) {
       {words.map((word) => {
         return word.match(IMG_REGEX) ? (
           <>
-            <img style={{width:400}} src={word} />
+            <img style={{width:400}} src={word} alt="nicepic" />
           </>
         ) : (
           word.match(URL_REGEX) ? (
             <>
-            <a target='_blank' href={word}>{word}</a>{ ' ' }
+            <a target='' href={word}>{word}</a>{ ' ' }
           </>
         ) : (
           word + ' '
